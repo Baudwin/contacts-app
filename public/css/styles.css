@@ -1,0 +1,141 @@
+body{
+    background-color: rgb(84, 151, 184);
+}
+
+.form-signin {
+	max-width: 330px;
+	padding-top: 10rem;
+  }
+  
+  .form-signin .form-floating:focus-within {
+	z-index: 2;
+  }
+  .form-signin input[type="username"] {
+	margin-bottom: 1px;
+	border-top-left-radius: 0.5;
+	border-top-right-radius: 0.5;
+	
+  }
+  .form-signin input[type="text"] {
+	margin-bottom: 1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+  }
+  
+  .form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	
+  }
+  .h3{
+	text-align: center;
+  }
+
+
+input {
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+	display: block;
+	outline: none;
+	padding: 20px 15px 8px 30px;
+	position: relative;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	width: 100%;
+	}
+	input:focus {
+	border-bottom-color: #407e93;
+	border-bottom-width: 2px;
+	}
+
+.h3{
+    color: rgb(191, 73, 204);
+    text-align: center;
+}
+.save{
+    float: right;
+}
+.box{
+    border: 1px solid;
+    padding: 10px 20px 10px 20px ;
+    background-color: rgb(194, 219, 230);
+}
+.contacts{
+    border: 1px solid;
+    margin-top: 10px;
+    border-radius: 7PX;
+    background-color: rgb(56, 52, 52);
+    padding: 10px 10px 0 10px;
+}
+.contacts-info{
+    border: 1px solid;
+    margin-top: 4px;
+    border-radius: 7PX;
+    background-color: rgb(56, 52, 52);
+    padding: 10px 10px 0 10px;
+}
+.name{
+    color: white;
+    padding-top: 8px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+.avatar{
+    float: left;
+    width: 45px;
+    height: 45px;
+    background-color: rgb(87, 142, 157);
+    border: 1px solid;
+    border-radius: 45%;
+    text-align: center;
+    margin: 0 16px 5px 0;
+}
+.letter{
+    position: relative;
+    top: 9px;
+    font-weight: bold;
+    color: aliceblue;
+}
+.contact-avatar{
+        width: 80px;
+        height: 80px;
+        background-color: rgb(87, 142, 157);
+        border: 1px solid;
+        border-radius: 45%;
+        margin: 0 16px 5px 0;
+        display: inline-block;
+        margin-left: 16px;
+}
+.name-avatar{
+    text-align: center;
+}
+
+.contact-letter{
+    position: relative;
+    top: 27px;
+    font-weight: bold;
+    color: aliceblue;
+}
+.contact-info{
+    color: white;
+}
+.number{
+    font-size: small;
+    font-weight: lighter;
+    color: rgb(231, 214, 214);
+}
+.btn-delete{
+    float: right;
+}
+.logout{
+float: right;
+}
+
+.con:hover{
+    background-color: grey;
+}

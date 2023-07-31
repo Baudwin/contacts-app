@@ -1,0 +1,67 @@
+<%- include("partials/header") %>
+
+<!-- HEADER -->
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a style="margin-left: 5px;font-weight: bold;" href="/contacts/<%= contact.user %>" class="navbar-brand"> Contacts </a>
+
+
+  <a style="margin-right: 4px;" class="btn btn-outline-danger btn-md" href="/" type="submit">Logout</a>
+</nav>
+<!-- END OF HEADER -->
+
+
+<div class="contacts-info container">
+<div class="container">
+    <a href="/contacts/<%= contact.user %>" class="btn btn-warning" > <span >  < </span> </a>
+<form action="/delete" method="post">
+
+        <div>
+       <div class="name-avatar">
+        <div class="contact-avatar"> <span class="contact-letter">  <%= (contact.firstName).charAt(0) %>  </span> </div>   <a href=""> <div class="name">   <%= contact.firstName %> <%= contact.middleName %> <%= contact.lastName %>  </div>  <hr class="hr"> </a> 
+       </div>  
+        </div>
+
+        <div class="container contact-info">
+     
+            <div class="container">
+                <span class="number">Mobile</span> <br>
+                <span > <%= contact.phoneNumber %> </span> <hr>
+            </div>
+
+            <div class="container">
+                <span class="number">Email</span> <br>
+                <span > <%= contact.email %> </span> <hr>
+            </div>
+            
+            <div class="container">
+                <span class="number">Address</span> <br>
+                <span > <%= contact.address %> </span> <hr>
+            </div>
+
+            <div class="container">
+                <span class="number">Date added</span> <br>
+                <span style="font-size: smaller;" > <%= contact.date %> </span> <hr>
+            </div>
+            <div class="container">
+                <span class="number">Time added</span> <br>
+                <span style="font-size: smaller;"  > <%= contact.time %> </span> <hr>
+            </div>
+            <input name="userID" hidden value="<%= contact.user %>" type="hidden">
+
+            <div class="container">
+                <a href="/edit-contact/<%= contact.contactID %>" class="btn btn-secondary" >edit</a>
+                <button name="deletebtn" class="btn btn-delete btn-danger" value="<%= contact.contactID %>" type="submit">delete</button>
+
+            </div>
+            <br>
+        </form>
+
+        </div>
+</div>
+
+    
+</div>
+
+
+
+<%- include("partials/footer") %>

@@ -1,0 +1,41 @@
+<%- include("partials/header") %>
+
+
+<!-- HEADER -->
+<nav class="navbar navbar-light bg-light justify-content-between">
+            <% user.forEach(user => { %>
+                <a  class="navbar-brand"> <span style="font-weight: bold;">Howdy</span> <span style="font-weight: bold; color: rgb(87, 112, 213); text-transform: uppercase;"> <%= user.username %></span> </a>
+                <% }) %>
+
+
+  <a style="margin-right: 4px;" class="btn btn-outline-danger btn-md" href="/" type="submit">Logout</a>
+</nav>
+<!-- END OF HEADER -->
+
+
+<br>
+<div>
+
+<% user.forEach(user => { %>
+<div style="position: relative;right: 5px;" class="container"><a class="btn  btn-outline-dark" href="/new-contact/<%= user.userID %>">Add new contact</a></div>
+<% }) %>
+<div class="contacts container">
+<div class="container">
+
+    <% contact.forEach(contact => { %>
+
+        <div class="con">
+            <a  href="/contact-info/<%= contact.contactID %>">
+         <div style="color: grey;" class="avatar"> <span class="letter">  <%= (contact.firstName).charAt(0) %>   </span> </div>    <div class="name">   <%= contact.firstName %> <%= contact.middleName %> <%= contact.lastName %>   <hr> </div> </a> 
+
+        </div>
+  
+        <% }) %>
+
+
+</div>
+
+    
+</div>
+
+<%- include("partials/footer") %>

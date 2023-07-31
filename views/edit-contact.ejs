@@ -1,0 +1,39 @@
+<%- include("partials/header") %>
+
+<!-- HEADER -->
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <% contact.forEach(contact => { %>
+    <a style="margin-left: 5px;font-weight: bold;" href="/contacts/<%= contact.user %>" class="navbar-brand"> Contacts </a>
+     
+    <% }) %>
+
+
+  <a style="margin-right: 4px;" class="btn btn-outline-danger btn-md" href="/" type="submit">Logout</a>
+</nav>
+<!-- END OF HEADER -->
+
+<br><br> <br><br>
+<% contact.forEach(contact => { %>
+
+    <div class="container box">
+<form action="/update-contact" method="post">
+
+        <div class="h3">Edit <%= contact.firstName %>'s info</div>
+        <input value="<%= contact.firstName %>" name="fName" required type="text" placeholder="FIRST NAME">
+        <input value=" <%=contact.middleName %>" name="mName" type="text" placeholder="MIDDLE NAME (optional)">  
+        <input value="<%= contact.lastName %> " type="text"  name="lName" placeholder="LAST NAME">
+        <input value="<%= contact.phoneNumber %>" type="text" required name="number" placeholder="PHONE NUMBER">
+        <input value="<%= contact.email %>" type="email" name="email" placeholder="EMAIL ADDRESS">
+        <input value="<%= contact.address %>" type="text" name="address" placeholder=" ADDRESS">
+        <br>
+    <a href="/contact-info/<%= contact.contactID %>" class="btn cancel btn-outline-danger" >Cancel</a>
+    <button name="updatebtn" class="btn save btn-outline-success" value="<%= contact.contactID %>" type="submit">Update</button>
+</form>
+    </div>
+    
+
+
+ 
+<% }) %>
+
+<%- include("partials/footer") %>

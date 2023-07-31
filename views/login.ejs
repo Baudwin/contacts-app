@@ -1,0 +1,34 @@
+<%- include("partials/header") %>
+
+<main class="form-signin w-100 m-auto">
+    <form action="/login" method="post" >
+      <h1 style="color: antiquewhite; font-weight: bold;"  class="h3 mb-3 fw-normal"> Login</h1>
+      <span> </span>
+      <% if (locals.errmsg) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= errmsg %>
+          </div>
+      <% } %>
+  
+      <div class="form-floating">
+            <input type="text" value="" autocomplete="off" required  name="username" class="form-control" placeholder="Username">
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" name="password" required  class="form-control" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
+
+    </form>
+    <br>
+    <div class="container">
+        <span> DONT HAVE AN ACCOUNT? </span>
+      <a style="color: rgb(165, 42, 42); font-weight: bold;" href="/signup">SIGNUP</a>
+      </div>
+  </main>
+
+
+
+<%- include("partials/footer") %>
