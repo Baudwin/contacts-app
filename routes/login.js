@@ -33,7 +33,7 @@ router.post("/login", (req, res) => {
                     if (result === true) {
                         return res.redirect(`/contacts/${user.userID}`)
 
-                    } 
+                    }
                     else {
                         let errmsg = "Incorrect Username or Password"
                         return res.render("login", { errmsg: errmsg })
