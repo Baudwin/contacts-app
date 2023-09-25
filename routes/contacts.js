@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const database = require('../database')
 
-
-router.get("/contacts/:userID", (req, res) => {
+// VIEW ALL CONTACTS BY USER ID
+router.get("/contacts/:userID", async (req, res) => {
     let userid = req.params.userID
 
     let command = `select * from contact
@@ -11,28 +11,31 @@ router.get("/contacts/:userID", (req, res) => {
     where user = ${userid}
     ORDER BY firstName ASC`
 
-
     let command2 = `select * from user
     where userID = ${userid}`
 
+    try {
 
-    database.query(command, (err, result) => {
-        database.query(command2, (err, user) => {
-            res.render("contacts", { contact: result, user: user })
+        let [user] = await database.query(command2)
+        let [result] = await database.query(command)
 
-        })
-    })
+        res.render("contacts", { contact: result, user: user })
+
+    } catch (error) {
+        res.send(error.message)
+    }
+
 
 })
 
 
-
+// ADD NEW CONTACT
 router.get("/new-contact/:userID", (req, res) => {
     let userId = req.params.userID;
     res.render("new-contact", { userID: userId })
 })
 
-router.post("/add-contact", (req, res) => {
+router.post("/add-contact", async (req, res) => {
     let user = req.body.user
     let fname = req.body.fName
     let mname = req.body.mName
@@ -40,55 +43,42 @@ router.post("/add-contact", (req, res) => {
     let number = req.body.number
     let email = req.body.email
     let address = req.body.address
-    let command = `insert into Contact 
-    values(contactID,${user} ,'${fname}', '${mname}','${lname}','${number}','${address}', '${email}', current_date(), current_time())`
-    database.query(command, (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect(`/contacts/${user}`)
-        }
-    })
+    let command = `INSERT INTO Contact 
+    VALUES(contactID,${user} ,'${fname}', '${mname}','${lname}','${number}','${address}', '${email}', current_date(), current_time())`
+
+    try {
+
+        await database.query(command)
+        res.redirect(`/contacts/${user}`)
+
+    } catch (error) {
+        res.redirect(`/contacts/${user}`)
+    }
 
 })
 
 
-
-router.get("/contact-info/:contactID", (req, res) => {
+// VIEW SINGLE CONTACT INFO
+router.get("/contact-info/:contactID", async (req, res) => {
     let id = req.params.contactID
-    let command = `select * from Contact
-    WHERE contactID = ${id}`
-    database.query(command, (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-
-        result.forEach(result => {
-            res.render("contact-info", { contact: result })
-        });
-    })
+    let result = await database.query(`SELECT * FROM Contact WHERE contactID = ${id}`)
+    result[0].forEach(result => {
+        res.render("contact-info", { contact: result })
+    });
 
 })
 
-
-router.get("/edit-contact/:contactId", (req, res) => {
+// EDIT CONTACT INFO PAGE
+router.get("/edit-contact/:contactId", async (req, res) => {
     let id = req.params.contactId
-    let command = `select * from Contact
-   WHERE contactID = ${id}`
+    let result = await database.query(`SELECT * FROM Contact WHERE contactID = ${id}`)
+    res.render("edit-contact", { contact: result[0] })
 
-    let command2 = `select user from Contact
-   WHERE contactID = ${id}`
-
-    database.query(command, (err, result) => {
-        database.query(command2, (err, user) => {
-
-            res.render("edit-contact", { contact: result })
-        })
-    })
 })
 
 
-router.post("/update-contact", (req, res) => {
+// UPDATE CONTACT INFO
+router.post("/update-contact", async (req, res) => {
     let id = req.body.updatebtn
     let fname = req.body.fName
     let mname = req.body.mName
@@ -96,33 +86,26 @@ router.post("/update-contact", (req, res) => {
     let number = req.body.number
     let email = req.body.email
     let address = req.body.address
-    let command = `update Contact
+    let command = `UPDATE Contact
     SET firstName = "${fname}", middleName = "${mname}", lastName = "${lname}", 
     phoneNumber = "${number}", email = "${email}", address = "${address}"
     WHERE contactID = ${id} `
-    database.query(command,  (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect(`/contact-info/${id}`)
-        }
-    })
+    await database.query(command)
+    res.redirect(`/contact-info/${id}`)
+
 })
 
 
-
-router.post("/delete", (req, res) => {
+// DELETE CONTACT
+router.post("/delete", async (req, res) => {
     let id = req.body.deletebtn
     let userID = req.body.userID
-    let command = `delete from Contact
-    WHERE contactID = ${id}`
-    database.query(command, (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-        res.redirect(`/contacts/${userID}`)
-    })
+
+    await database.query(`DELETE FROM Contact WHERE contactID = ${id}`)
+    res.redirect(`/contacts/${userID}`)
+
 })
+
 
 
 

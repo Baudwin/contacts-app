@@ -1,29 +1,35 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const database = require('../database')
 
-
+// VIEW SIGNUP PAGE
 router.get("/signup", (req, res) => {
     res.render("signup")
 })
 
-
+// NEW USER SIGNUP
 router.post("/signup", async (req, res) => {
     let username = req.body.username
     let email = req.body.email
     let password = req.body.password
 
-    bcrypt.hash(password, saltRounds, function (err, hash) {
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
 
-        let command = `insert into user
-        values(userID,"${username}","${hash}","${email}")`
+        let command = `INSERT INTO user
+        VALUES(userID,"${username}","${hash}","${email}")`
 
-        database.query(command, (err, result) => {
-            if (err) {
-                return res.render("signup")
-            }
+        try {
+            await database.query(command)
             res.redirect("/")
-        })
+        } catch (error) {
+            return res.render("signup")
+        }
+
+
+
+
 
     });
 

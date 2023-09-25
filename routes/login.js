@@ -6,45 +6,40 @@ const database = require('../database')
 
 
 
-
+// VIEW LOGIN PAGE
 router.get("/", (req, res) => {
     res.render("login")
 })
 
 
-router.post("/login", (req, res) => {
-    let username = req.body.username
-    let password = req.body.password
-    let command = `select * from user
-    WHERE username = '${username}'`
-    database.query(command, (err, users) => {
+// LOGIN USER BY
 
+router.post("/login", async (req, res) => {
+    let { username, password } = req.body
+    let users = await database.query(`SELECT * FROM user WHERE username = '${username}'`)
+    users = users[0]
+    if (users.length < 1) {
+        let errmsg = "Incorrect Username or Password"
 
-        if (users.length < 1) {
-            let errmsg = "Incorrect Username or Password"
-            return res.render("login", { errmsg: errmsg })
-        }
+        return res.render("login", { errmsg: errmsg })
+    }
 
-        if (users.length > 0) {
+    if (users.length > 0) {
+        bcrypt.compare(password, users[0].password, function (err, result) {
+            if (result === true) {
 
-            users.forEach(user => {
+                return res.redirect(`/contacts/${users[0].userID}`)
 
-                bcrypt.compare(password, user.password, function (err, result) {
-                    if (result === true) {
-                        return res.redirect(`/contacts/${user.userID}`)
-
-                    }
-                    else {
-                        let errmsg = "Incorrect Username or Password"
-                        return res.render("login", { errmsg: errmsg })
-                    }
-                });
-            });
-        }
+            }
+            else {
+                let errmsg = "Incorrect Username or Password"
+                return res.render("login", { errmsg: errmsg })
+            }
+        });
+    }
 
 
 
-    })
 })
 
 
