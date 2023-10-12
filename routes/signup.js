@@ -11,17 +11,17 @@ router.get("/signup", (req, res) => {
 
 // NEW USER SIGNUP
 router.post("/signup", async (req, res) => {
-    let username = req.body.username
-    let email = req.body.email
-    let password = req.body.password
+    const username = req.body.username
+    const email = req.body.email
+    const password = req.body.password
 
     bcrypt.hash(password, saltRounds, async (err, hash) => {
-
+        const signnupDetails = [username,hash,email]
         let command = `INSERT INTO user
-        VALUES(userID,"${username}","${hash}","${email}")`
+        VALUES(userID,?,?,?)`
 
         try {
-            await database.query(command)
+            await database.query(command,signnupDetails)
             res.redirect("/")
         } catch (error) {
             return res.render("signup")

@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const database = require('../database')
+const passport = require('passport')
 
 
 
@@ -13,10 +14,10 @@ router.get("/", (req, res) => {
 
 
 // LOGIN USER BY
-
-router.post("/login", async (req, res) => {
+router.post("/login", passport.authenticate('local') , async (req, res) => {
     let { username, password } = req.body
-    let users = await database.query(`SELECT * FROM user WHERE username = '${username}'`)
+    dbQuery = `SELECT * FROM user WHERE username = ?`
+    let users = await database.query(dbQuery, username)
     users = users[0]
     if (users.length < 1) {
         let errmsg = "Incorrect Username or Password"
@@ -40,6 +41,15 @@ router.post("/login", async (req, res) => {
 
 
 
+})
+
+
+
+router.post("/logout", (req,res,next)=>{
+    req.session.destroy((err)=>{
+       res.redirect("/") 
+    })
+    
 })
 
 
