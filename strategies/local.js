@@ -30,7 +30,8 @@ passport.deserializeUser(async (username, done) => {
 
 
 passport.use(new localStrategy(async (username, password, done) => {
-
+try {
+    
     const command = `SELECT * FROM user WHERE username = ?`
     const [user] = await db.query(command, username)
     if (user.length == 0) {
@@ -48,5 +49,11 @@ passport.use(new localStrategy(async (username, password, done) => {
         })
 
     }
+
+
+} catch (error) {
+    done(error)
+}
+
 
 }))
