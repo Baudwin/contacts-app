@@ -13,7 +13,6 @@ const port = 4000
 
 app.use(session({
     secret: 'mysecret',
-    cookie: {maxAge:2400000},
     resave: false,
     saveUninitialized: false
 }))

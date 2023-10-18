@@ -3,12 +3,13 @@
 <!-- HEADER -->
 <nav class="navbar navbar-light bg-light justify-content-between">
     <% contact.forEach(contact => { %>
-    <a style="margin-left: 5px;font-weight: bold;" href="/contacts/<%= contact.user %>" class="navbar-brand"> Contacts </a>
+    <a style="margin-left: 5px;font-weight: bold;" href="/contacts" class="navbar-brand"> Contacts </a>
      
     <% }) %>
 
-
-  <a style="margin-right: 4px;" class="btn btn-outline-danger btn-md" href="/" type="submit">Logout</a>
+    <form action="/logout" method="post">
+        <button style="margin-right: 4px;" class="btn btn-outline-danger btn-md" type="submit">Logout</button>
+  </form>
 </nav>
 <!-- END OF HEADER -->
 

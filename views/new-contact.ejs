@@ -1,10 +1,11 @@
 <%- include("partials/header") %>
 <!-- HEADER -->
 <nav class="navbar navbar-light bg-light justify-content-between">
-    <a style="margin-left: 5px;font-weight: bold;" href="/contacts/<%= userID %>" class="navbar-brand"> Contacts </a>
+    <a style="margin-left: 5px;font-weight: bold;" href="/contacts" class="navbar-brand"> Contacts </a>
 
-
-  <a style="margin-right: 4px;" class="btn btn-outline-danger btn-md" href="/" type="submit">Logout</a>
+    <form action="/logout" method="post">
+        <button style="margin-right: 4px;" class="btn btn-outline-danger btn-md" type="submit">Logout</button>
+  </form>
 </nav>
 <!-- END OF HEADER -->
 <br><br> <br><br>
@@ -20,7 +21,7 @@
         <input type="email" name="email" placeholder="EMAIL ADDRESS">
         <input type="text" name="address" placeholder=" ADDRESS">
         <br>
-    <a href="/contacts/<%= userID %>" class="btn cancel btn-danger" type="submit">Cancel</a>
+    <a href="/contacts" class="btn cancel btn-danger" type="submit">Cancel</a>
     <button class="btn save btn-success" type="submit">Save</button>
     </div>
     

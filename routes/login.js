@@ -13,34 +13,9 @@ router.get("/", (req, res) => {
 })
 
 
-// LOGIN USER BY
-router.post("/login", passport.authenticate('local') , async (req, res) => {
-    let { username, password } = req.body
-    dbQuery = `SELECT * FROM user WHERE username = ?`
-    let users = await database.query(dbQuery, username)
-    users = users[0]
-    if (users.length < 1) {
-        let errmsg = "Incorrect Username or Password"
-
-        return res.render("login", { errmsg: errmsg })
-    }
-
-    if (users.length > 0) {
-        bcrypt.compare(password, users[0].password, function (err, result) {
-            if (result === true) {
-
-                return res.redirect(`/contacts/${users[0].userID}`)
-
-            }
-            else {
-                let errmsg = "Incorrect Username or Password"
-                return res.render("login", { errmsg: errmsg })
-            }
-        });
-    }
-
-
-
+// LOGIN and AUTHENTICATE USER
+router.post("/login", passport.authenticate('local',{failureRedirect:'/'}), async (req, res) => {
+    res.redirect("/contacts")
 })
 
 

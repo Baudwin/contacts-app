@@ -4,9 +4,8 @@ const database = require('../database')
 
 
 // VIEW ALL CONTACTS BY USER ID
-router.get("/contacts/:userID", async (req, res) => {
+router.get("/contacts", async (req, res) => {
 
-    let userid = req.params.userID
     let command = `select * from contact
     inner join user ON contact.user = user.userID
     where user = ?
@@ -17,19 +16,14 @@ router.get("/contacts/:userID", async (req, res) => {
 
     try {
 
-        let [user] = await database.query(command2,userid)
-        let [result] = await database.query(command,userid)
+        let [user] = await database.query(command2,req.user.userID)
+        let [result] = await database.query(command,req.user.userID)
 
-         if (userid === JSON.stringify(req.user.userID)) {
            res.render("contacts", { contact: result, user: user })
-        }else{
-            res.redirect("/")
-        }
         
 
-
     } catch (error) {
-        res.send(error.message)
+        res.redirect("/")
     }
 
 
@@ -57,10 +51,10 @@ router.post("/add-contact", async (req, res) => {
     try {
 
         await database.query(command, newContact)
-        res.redirect(`/contacts/${user}`)
+        res.redirect(`/contacts`)
 
     } catch (error) {
-        res.redirect(`/contacts/${user}`)
+        res.redirect(`/contacts`)
     }
 
 })
@@ -107,7 +101,7 @@ router.post("/update-contact", async (req, res) => {
     const email = req.body.email
     const address = req.body.address
     const contactUpdate = [fname, mname, lname, number, email, address, id]
-    console.log(contactUpdate);
+    
     try {
         const command = `UPDATE Contact
         SET firstName = ?, middleName = ?, lastName = ?, 
@@ -130,7 +124,7 @@ router.post("/delete", async (req, res) => {
     const dbQuery = `DELETE FROM Contact WHERE contactID = ?`
     try {
         await database.query(dbQuery, id)
-        res.redirect(`/contacts/${userID}`)
+        res.redirect(`/contacts`)
     }
     catch (error) {
         res.send(error)
