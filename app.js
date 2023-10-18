@@ -8,7 +8,7 @@ const signup = require('./routes/signup')
 const contacts = require('./routes/contacts')
 const database = require("./database")
 const local = require("./strategies/local")
-const port = process.env.PORT || 4000
+const port = 4000
 
 
 app.use(session({
