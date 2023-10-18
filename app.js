@@ -21,6 +21,19 @@ app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static(__dirname + "/public"))
+
+app.get("/cntcts", async(req,res)=>{
+    let cmd = `select * from contact`
+    let [contacts] = await database.query(cmd)
+    res.send(contacts)
+})
+
+app.get("/descr", async(req,res)=>{
+    let cmd = `DESC contact`
+    let [contacts] = await database.query(cmd)
+    res.send(contacts)
+})
+
 app.use(login)
 
 app.use(passport.initialize())
