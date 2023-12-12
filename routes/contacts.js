@@ -19,10 +19,9 @@ router.get("/contacts", async (req, res) => {
         let [user] = await database.query(command2,req.user.userID)
         let [result] = await database.query(command,req.user.userID)
 
-           res.render("contacts", { contact: result, user: user })
-        
-
-    } catch (error) {
+           res.render("contacts", { contact: result, user: user })    
+    } 
+    catch (error) {
         res.redirect("/")
     }
 
@@ -37,23 +36,16 @@ router.get("/new-contact/:userID", (req, res) => {
 })
 
 router.post("/add-contact", async (req, res) => {
-    const user = req.body.user
-    const fname = req.body.fName
-    const mname = req.body.mName
-    const lname = req.body.lName
-    const number = req.body.number
-    const email = req.body.email
-    const address = req.body.address
-    const newContact = [user, fname, mname, lname, number, email, address]
-    let command = `INSERT INTO Contact 
+    const {user,fName,mName,lName,number,email,address} = req.body
+    const newContact = [user,fName,mName,lName,number,email,address]
+    let command = `INSERT INTO Contact
     VALUES(contactID,? ,?, ?,?,?,?, ?, current_date(), current_time())`
 
     try {
-
         await database.query(command, newContact)
         res.redirect(`/contacts`)
-
-    } catch (error) {
+    }
+    catch (error) {
         res.redirect(`/contacts`)
     }
 
@@ -65,14 +57,15 @@ router.get("/contact-info/:contactID", async (req, res) => {
     let id = req.params.contactID
     const dbQuery = `SELECT * FROM Contact WHERE contactID = ?`
     try {
-        const result = await database.query(dbQuery, id)
-        result[0].forEach(result => {
-            res.render("contact-info", { contact: result })
-        });
-    } catch (error) {
+        const [result] = await database.query(dbQuery, id)
+       result.map(result=>{
+        return res.render("contact-info", { contact: result })
+       })
+       
+    }
+    catch (error) {
         res.send(error)
     }
-
 
 })
 
@@ -83,7 +76,8 @@ router.get("/edit-contact/:contactId", async (req, res) => {
     try {
         let result = await database.query(dbQuery, id)
         res.render("edit-contact", { contact: result[0] })
-    } catch (error) {
+    }
+    catch (error) {
         res.send(error)
     }
 
@@ -93,14 +87,9 @@ router.get("/edit-contact/:contactId", async (req, res) => {
 
 // UPDATE CONTACT INFO
 router.post("/update-contact", async (req, res) => {
-    const id = req.body.updatebtn
-    const fname = req.body.fName
-    const mname = req.body.mName
-    const lname = req.body.lName
-    const number = req.body.number
-    const email = req.body.email
-    const address = req.body.address
-    const contactUpdate = [fname, mname, lname, number, email, address, id]
+
+    const {fName,mName,lName,number,email,address,c_id} = req.body
+    const contactUpdate = [fName,mName,lName, number, email, address, c_id]
     
     try {
         const command = `UPDATE Contact
@@ -108,7 +97,7 @@ router.post("/update-contact", async (req, res) => {
         phoneNumber = ?, email = ?, address = ?
         WHERE contactID = ? `
         await database.query(command, contactUpdate)
-        res.redirect(`/contact-info/${id}`)
+        res.redirect(`/contact-info/${c_id}`)
     }
     catch (error) {
         res.send(error)
@@ -119,11 +108,10 @@ router.post("/update-contact", async (req, res) => {
 
 // DELETE CONTACT
 router.post("/delete", async (req, res) => {
-    let id = req.body.deletebtn
-    let userID = req.body.userID
+    const {c_id} = req.body
     const dbQuery = `DELETE FROM Contact WHERE contactID = ?`
     try {
-        await database.query(dbQuery, id)
+        await database.query(dbQuery, c_id)
         res.redirect(`/contacts`)
     }
     catch (error) {

@@ -12,7 +12,6 @@ router.get("/", (req, res) => {
     res.render("login")
 })
 
-
 // LOGIN and AUTHENTICATE USER
 router.post("/login", passport.authenticate('local',{failureRedirect:'/'}), async (req, res) => {
     res.redirect("/contacts")
@@ -20,7 +19,7 @@ router.post("/login", passport.authenticate('local',{failureRedirect:'/'}), asyn
 
 
 
-router.post("/logout", (req,res,next)=>{
+router.post("/logout", (req,res)=>{
     req.session.destroy((err)=>{
        res.redirect("/") 
     })

@@ -51,7 +51,8 @@
 
             <div class="container">
                 <a href="/edit-contact/<%= contact.contactID %>" class="btn btn-secondary" >edit</a>
-                <button name="deletebtn" class="btn btn-delete btn-danger" value="<%= contact.contactID %>" type="submit">delete</button>
+                <input  type="text" hidden value="<%= contact.contactID %>" name="c_id">
+                <button class="btn btn-delete btn-danger"  type="submit">delete</button>
 
             </div>
             <br>

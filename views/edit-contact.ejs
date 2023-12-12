@@ -28,7 +28,8 @@
         <input value="<%= contact.address %>" type="text" name="address" placeholder=" ADDRESS">
         <br>
     <a href="/contact-info/<%= contact.contactID %>" class="btn cancel btn-outline-danger" >Cancel</a>
-    <button name="updatebtn" class="btn save btn-outline-success" value="<%= contact.contactID %>" type="submit">Update</button>
+    <input hidden value="<%= contact.contactID %>" type="text" name="c_id" >
+    <button class="btn save btn-outline-success" type="submit">Update</button>
 </form>
     </div>
     

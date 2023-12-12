@@ -11,12 +11,10 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (username, done) => {
     try {
-
         const [user] = await db.query(`SELECT * FROM user
         WHERE username = ?`, username)
         if (user[0]) {
-            done(null, user[0])
-            
+            done(null, user[0])     
         }
         else {
             done(null, false)

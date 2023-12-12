@@ -26,8 +26,9 @@
     <% contact.forEach(contact => { %>
 
         <div class="con">
+           
             <a  href="/contact-info/<%= contact.contactID %>">
-         <div style="color: grey;" class="avatar"> <span class="letter">   <%= (contact.firstName).charAt() %>   </span> </div>    <div class="name">   <%= contact.firstName %> <%= contact.middleName %> <%= contact.lastName %>   <hr> </div> </a> 
+         <div style="color: grey;" class="avatar"> <span class="letter">  <%= (contact.firstName).charAt() %>   </span> </div>    <div class="name">   <%= contact.firstName %> <%= contact.middleName %> <%= contact.lastName %>   <hr> </div> </a> 
 
         </div>
   
@@ -38,7 +39,6 @@
 
     
 </div>
-
 
 
 <%- include("partials/footer") %>
