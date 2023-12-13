@@ -3,11 +3,11 @@ const app = express()
 const passport = require('passport')
 const ejs = require("ejs")
 const session = require("express-session")
-const login = require('./routes/login')
-const signup = require('./routes/signup')
-const contacts = require('./routes/contacts')
-const database = require("./database")
-const local = require("./strategies/local")
+const login = require('../routes/login')
+const signup = require('../routes/signup')
+const contacts = require('../routes/contacts')
+const database = require("../database")
+const local = require("../strategies/local")
 const port = 4000
 
 
