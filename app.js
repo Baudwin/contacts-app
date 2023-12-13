@@ -14,15 +14,14 @@ const port = 4000
 app.use(session({
     secret: 'mysecret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie:{maxAge:60000*20}
 }))
 
 app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static(__dirname + "/public"))
-
-
 
 
 
